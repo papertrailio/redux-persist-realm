@@ -32,29 +32,17 @@ class RealmPersistInterface {
 
     setItem = (key, value, callback) => {
         try {
-            this.getItem(key, (error) => {
-                this.realm.write(() => {
-                    if (error) {
-                        this.realm.create(
-                            'Item',
-                            {
-                                name: key,
-                                content: value,
-                            }
-                        );
-                    } else {
-                        this.realm.create(
-                            'Item',
-                            {
-                                name: key,
-                                content: value,
-                            },
-                            true
-                        );
-                    }
+            this.realm.write(() => {
+                this.realm.create(
+                    'Item',
+                    {
+                        name: key,
+                        content: value,
+                    },
+                    true
+                );
 
-                    callback();
-                });
+                callback();
             });
         } catch (error) {
             callback(error);
